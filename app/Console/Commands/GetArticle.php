@@ -20,15 +20,6 @@ class GetArticle extends Command
         foreach (Category::all() as $category) {
             $crawler = $client->request('GET', $category->url);
 
-//            if ($category->id == 2) {
-//                dd([
-//                    'category'    => $category,
-////                'title'       => $title,
-//                    'category_id' => $category->id,
-////                'url'         => $link,
-//                ]);
-//            }
-
             $crawler->filter(
                 'a.article-preview-mixed article-preview-mixed--secondary article-preview-mixed--with-absolute-secondary-item'
             )->each(function ($node) use ($category) {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\WebController::class, 'index']);
-Route::get('/show/{article}', [\App\Http\Controllers\WebController::class, 'show'])->name('show');
+Route::get('/', [WebController::class, 'index'])->name('index');
+Route::get('/show/{article}', [WebController::class, 'show'])->name('show');
+Route::get('/category/{category}', [WebController::class, 'category'])->name('category');
+Route::get('/search', [WebController::class, 'search'])->name('search');
 

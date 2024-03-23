@@ -51,12 +51,5 @@ class GetArticleInfo extends Command
                 echo "Статья: " . $article->title . ' не найден';
             }
         }
-
-
-//        echo "Дата публикации: $publishedAt\n";
-//        echo "Ссылка на изображение: $imageUrl\n";
-//        echo "Короткое описание: $shortDescriptionClean\n";
-//        echo "Автор: $authorName\n";
-//        echo "Текст статьи:\n$fullText";
     }
 }

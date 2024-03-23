@@ -32,27 +32,33 @@
             </button>
         </div>
     </div>
-    
-    <h1 class="mb-4 text-center">Последние статьи</h1>
-    <div class="row">
-        @foreach($articles as $article)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <img
-                        src="{{ $article->images[0]->image ?? 'https://i.pcmag.com/imagery/reviews/03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png' }}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <a href="{{ route('show', compact('article')) }}"
-                           style="text-decoration: none; color: inherit;">
-                            <h5 class="card-title mb-3" style="min-height: 3.6rem;">{{ $article->title }}</h5>
-                            <p class="card-text" style="height: 4.5rem; overflow: hidden;">{{ $article->published }}</p>
-                        </a>
+
+
+    <h1 class="mb-4 text-center ">Пойск по тексту {{$search}}</h1>
+    @if($articles)
+        <div class="row">
+            @foreach($articles as $article)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img
+                            src="{{ $article->images[0]->image ?? 'https://i.pcmag.com/imagery/reviews/03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png' }}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <a href="{{ route('show', compact('article')) }}"
+                               style="text-decoration: none; color: inherit;">
+                                <h5 class="card-title mb-3" style="min-height: 3.6rem;">{{ $article->title }}</h5>
+                                <p class="card-text"
+                                   style="height: 4.5rem; overflow: hidden;">{{ $article->published }}</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
-    <div class="d-flex justify-content-center mt-5" style="overflow-x: auto">
-        {!! $articles->links('pagination::bootstrap-4') !!}
-    </div>
+            @endforeach
+        </div>
+        <div class="d-flex justify-content-center" style="overflow-x: auto">
+            {!! $articles->appends(['search' => $search])->links('pagination::bootstrap-4') !!}
+        </div>
+    @else
+        <h2>По вашему запросу ({{$search}})ничего не найдено</h2>
+    @endif
 @endsection
