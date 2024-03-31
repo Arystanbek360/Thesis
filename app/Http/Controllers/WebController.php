@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 use App\Models\Article;
-use App\Models\ArticleClick;
 use App\Models\Category;
 use App\Services\RecomendService;
 use Illuminate\Http\Request;
@@ -13,11 +12,12 @@ class WebController extends Controller
 {
     public function show(Request $request, Article $article)
     {
-        ArticleClick::create([
-            'ip_address' => $request->ip(),
-            'article_id' => $article->id,
-            'user_agent' => $request->header('User-Agent') ?? '',
-        ]);
+//        ArticleClick::create([
+//            'ip_address' => $request->ip(),
+//            'article_id' => $article->id,
+//            'user_agent' => $request->header('User-Agent') ?? '',
+//        ]);
+
         $categories = Category::whereHas('articles')->get();
         $recomends  = RecomendService::getRecomends(['ip' => request()->ip()]);
 
@@ -58,5 +58,17 @@ class WebController extends Controller
             'search'     => $data['search'] ?? '',
             'recomends'  => RecomendService::getRecomends(['ip' => request()->ip()]),
         ]);
+    }
+
+    public function sessionArticle(Request $request, Article $article)
+    {
+//        ArticleSession::create([
+//            'ip_address' => $request->ip(),
+//            'article_id' => $article->id,
+//            'user_agent' => $request->header('User-Agent') ?? '',
+//            'duration'   => $request->input('duration') ?? 0,
+//        ]);
+
+        return response()->json(['message' => 'success']);
     }
 }

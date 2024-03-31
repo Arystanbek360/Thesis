@@ -1,18 +1,19 @@
 @extends('layout')
 @section('content')
     <div class="container mt-5 d-flex flex-column justify-content-center align-items-center" style="min-height: 85vh">
-        <h1 class="text-center">{{$article->title}}</h1>
+        <h1 class="text-center mb-5">{{$article->title}}</h1>
         <img src="{{$article->images[0]->image}}" class="card-img-top" alt="...">
         {{--    <p>Категория: название категории</p>--}}
         <div class="col-11">
-            <h2 class="mt-5">Краткое описание: {{$article->short_description}}</h2>
-            <p>Описание: {{$article->description}}</p>
-            <p>Автор: {{$article->author}}</p>
+            <h2 class="my-5">{{$article->short_description}}</h2>
+            <h4>Описание:</h4>
+            <p>{!! nl2br(e($article->description)) !!}</p>
+            <h4 class="mt-5">Автор: {{$article->author}}</h4>
             <p><small class="text-muted">{{$article->published}}</small></p>
-            <div>
-                <button type="button" class="btn btn-success">Лайк</button>
-                <button type="button" class="btn btn-danger">Дизлайк</button>
-            </div>
+            {{--            <div>--}}
+            {{--                <button type="button" class="btn btn-success">Лайк</button>--}}
+            {{--                <button type="button" class="btn btn-danger">Дизлайк</button>--}}
+            {{--            </div>--}}
         </div>
     </div>
 
@@ -24,8 +25,8 @@
                     <div class="carousel-item {{$key == 0 ? 'active' : ''}}">
                         <a href="{{ route('show', $recomend->id) }}">
                             <img
-                                src="{{$recomend->images[0]->image ?? 'https://i.pcmag.com/imagery/reviews/03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png'}}"
-                                class="d-block w-100" alt="...">
+                                    src="{{$recomend->images[0]->image ?? 'https://i.pcmag.com/imagery/reviews/03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png'}}"
+                                    class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block bg-dark rounded-2">
                                 <h6 class="fs-4">{{$recomend->title}}</h6>
                             </div>
@@ -48,5 +49,16 @@
             </button>
         </div>
     </div>
+    {{--    <form id="articleForm" action="{{route('sessionArticle',compact('article'))}}" method="post">--}}
+    {{--        @csrf--}}
+    {{--        <input type="hidden" name="duration" id="duration" value="">--}}
+    {{--    </form>--}}
 
+    {{--    <script>--}}
+    {{--        let startTime = Date.now();--}}
+    {{--        window.addEventListener('beforeunload', function () {--}}
+    {{--            let duration = Math.round((Date.now() - startTime) / 1000);--}}
+    {{--            document.getElementById('duration').value = duration;--}}
+    {{--        });--}}
+    {{--    </script>--}}
 @endsection

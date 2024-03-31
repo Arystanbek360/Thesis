@@ -15,7 +15,7 @@ class GetArticleInfo extends Command
 
     public function handle()
     {
-        $client = new Client();
+        $client   = new Client();
         $articles = Article::all();
 
         foreach ($articles as $article) {
@@ -24,23 +24,24 @@ class GetArticleInfo extends Command
             $crawler = $client->request('GET', $url);
 
             if ($crawler->filter('.formatted-body__content--wrapper')->count() > 0) {
-                $author = $crawler->filter('address.author-item')->text();
-                $author = trim(str_replace('Автор:', '', $author));
+                $author   = $crawler->filter('address.author-item')->text();
+                $author   = trim(str_replace('Автор:', '', $author));
                 $imageUrl = $crawler->filter('figure.inline-picture__container img')->attr('src');
                 $text = $crawler->filter('p.formatted-body__paragraph')->each(function ($node) {
-                    return $node->text() . "\n";
+                    return $node->text() . "\n"; // Возвращаем текст с символом новой строки в конце
                 });
 
-                $fullText = implode("\n\n", $text);
-                $publishedDateTime = $crawler->filter('time.datetime--publication')->attr('datetime');
-                $shortDescription = $crawler->filter('strong.formatted-body__strong')->text();
+                $fullText = implode("\n", $text); // Используем символ новой строки для склеивания
+
+                $publishedDateTime     = $crawler->filter('time.datetime--publication')->attr('datetime');
+                $shortDescription      = $crawler->filter('strong.formatted-body__strong')->text();
                 $shortDescriptionClean = preg_replace('/<a.*?>.*?<\/a>/', '', $shortDescription);
                 $shortDescriptionClean = strip_tags($shortDescriptionClean);
-                $publishedAt = Carbon::createFromFormat('Y-m-d\TH:i:sP', $publishedDateTime);
+                $publishedAt           = Carbon::createFromFormat('Y-m-d\TH:i:sP', $publishedDateTime);
 
-                $article->author = $author;
-                $article->description = $fullText;
-                $article->published = $publishedAt;
+                $article->author            = $author;
+                $article->description       = $fullText;
+                $article->published         = $publishedAt;
                 $article->short_description = $shortDescriptionClean;
                 $article->save();
 
