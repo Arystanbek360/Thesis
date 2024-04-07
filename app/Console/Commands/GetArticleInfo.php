@@ -16,7 +16,7 @@ class GetArticleInfo extends Command
     public function handle()
     {
         $client   = new Client();
-        $articles = Article::where('id', '>', 5578)->get();
+        $articles = Article::where('id', '>', 8333)->get();
 
         foreach ($articles as $article) {
             $url = $article->url;
