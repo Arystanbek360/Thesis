@@ -18,5 +18,9 @@ Route::get('/', [WebController::class, 'index'])->name('index');
 Route::get('/show/{article}', [WebController::class, 'show'])->name('show');
 Route::get('/category/{category}', [WebController::class, 'category'])->name('category');
 Route::get('/search', [WebController::class, 'search'])->name('search');
-Route::post('/session/{article}', [WebController::class, 'sessionArticle'])->name('sessionArticle');
+
+Route::get('/test', function () {
+    return response()->json(['hello' => 'pingPong']);
+});
+
 

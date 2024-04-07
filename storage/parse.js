@@ -43,7 +43,7 @@ const getCategoryArticles = async (categoryUrl, maxArticles) => {
 
 (async () => {
     const categoryUrl = process.argv[2]; // URL категории передается в качестве аргумента
-    const maxArticles = 250; // Указать желаемое количество статей
+    const maxArticles = 500; // Указать желаемое количество статей
 
     try {
         const articles = await getCategoryArticles(categoryUrl, maxArticles);

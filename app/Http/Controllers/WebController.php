@@ -12,14 +12,8 @@ class WebController extends Controller
 {
     public function show(Request $request, Article $article)
     {
-//        ArticleClick::create([
-//            'ip_address' => $request->ip(),
-//            'article_id' => $article->id,
-//            'user_agent' => $request->header('User-Agent') ?? '',
-//        ]);
-
         $categories = Category::whereHas('articles')->get();
-        $recomends  = RecomendService::getRecomends(['ip' => request()->ip()]);
+        $recomends  = RecomendService::getRecommendedArticles(request()->ip(), $article->id, request()->userAgent());
 
         return view('show', compact('article', 'categories', 'recomends'));
     }
@@ -34,7 +28,8 @@ class WebController extends Controller
             )
             ->paginate(9);
         $categories = Category::whereHas('articles')->get();
-        $recomends  = RecomendService::getRecomends(['ip' => request()->ip()]);
+
+        $recomends = RecomendService::getRecommended(request()->ip());
         return view('welcome', compact('articles', 'categories', 'recomends'));
     }
 
@@ -42,7 +37,7 @@ class WebController extends Controller
     {
         $articles   = $category->articles()->orderBy('published', 'desc')->whereNotNull('published')->paginate(9);
         $categories = Category::whereHas('articles')->get();
-        $recomends  = RecomendService::getRecomends(['ip' => request()->ip()]);
+        $recomends  = RecomendService::getRecommended(request()->ip());
         return view('welcome', compact('articles', 'categories', 'recomends'));
     }
 
@@ -56,19 +51,7 @@ class WebController extends Controller
             'articles'   => $articles,
             'categories' => Category::whereHas('articles')->get(),
             'search'     => $data['search'] ?? '',
-            'recomends'  => RecomendService::getRecomends(['ip' => request()->ip()]),
+            'recomends'  => RecomendService::getRecommended(request()->ip()),
         ]);
-    }
-
-    public function sessionArticle(Request $request, Article $article)
-    {
-//        ArticleSession::create([
-//            'ip_address' => $request->ip(),
-//            'article_id' => $article->id,
-//            'user_agent' => $request->header('User-Agent') ?? '',
-//            'duration'   => $request->input('duration') ?? 0,
-//        ]);
-
-        return response()->json(['message' => 'success']);
     }
 }
