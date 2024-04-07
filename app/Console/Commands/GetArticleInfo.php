@@ -16,7 +16,7 @@ class GetArticleInfo extends Command
     public function handle()
     {
         $client   = new Client();
-        $articles = Article::all();
+        $articles = Article::where('id', '>', 5578)->get();
 
         foreach ($articles as $article) {
             $url = $article->url;
@@ -27,7 +27,7 @@ class GetArticleInfo extends Command
                 $author   = $crawler->filter('address.author-item')->text();
                 $author   = trim(str_replace('Автор:', '', $author));
                 $imageUrl = $crawler->filter('figure.inline-picture__container img')->attr('src');
-                $text = $crawler->filter('p.formatted-body__paragraph')->each(function ($node) {
+                $text     = $crawler->filter('p.formatted-body__paragraph')->each(function ($node) {
                     return $node->text() . "\n"; // Возвращаем текст с символом новой строки в конце
                 });
 

@@ -12,7 +12,7 @@ const getCategoryArticles = async (categoryUrl, maxArticles) => {
 
     while (articles.length < maxArticles && scrollAttempts < 10) {
         await page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Используем setTimeout для ожидания
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         articles = await page.evaluate(() => {
             const articles = [];
@@ -42,7 +42,7 @@ const getCategoryArticles = async (categoryUrl, maxArticles) => {
 
 
 (async () => {
-    const categoryUrl = process.argv[2]; // URL категории передается в качестве аргумента
+    const categoryUrl = process.argv[2];
     const maxArticles = 500; // Указать желаемое количество статей
 
     try {
