@@ -38,7 +38,7 @@ class RecomendService
     public static function getRecommended(string $userIp)
     {
         $service = new ClickhouseRepository();
-
+//
         $articles = Article::whereIn('id', $service->getRecommendedArticles($userIp))->get();
 
         if ($articles->count() < 3) {

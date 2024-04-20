@@ -12,10 +12,13 @@ class WebController extends Controller
 {
     public function show(Request $request, Article $article)
     {
-        $categories = Category::whereHas('articles')->get();
-        $recomends  = RecomendService::getRecommendedArticles(request()->ip(), $article->id, request()->userAgent());
+        $categories = Category::inRandomOrder()->whereHas('articles')->whereNotNull('category_id',)->limit(11)->get();
 
-        return view('show', compact('article', 'categories', 'recomends'));
+        $recomends = RecomendService::getRecommendedArticles(request()->ip(), $article->id, request()->userAgent());
+
+//        $recomends = RecomendService::getRecommended(request()->ip());
+
+        return view('new.show', compact('article', 'categories', 'recomends'));
     }
 
     public function index()
@@ -27,18 +30,20 @@ class WebController extends Controller
                 'MIN(id) as id, title, MIN(short_description) as short_description, MIN(description) as description, MIN(author) as author, MIN(url) as url, MIN(published) as published, MIN(category_id) as category_id, MIN(created_at) as created_at, MIN(updated_at) as updated_at'
             )
             ->paginate(9);
-        $categories = Category::whereHas('articles')->get();
+        $categories = Category::inRandomOrder()->whereHas('articles')->whereNotNull('category_id',)->limit(11)->get();
 
         $recomends = RecomendService::getRecommended(request()->ip());
-        return view('welcome', compact('articles', 'categories', 'recomends'));
+
+        return view('new.welcome', compact('articles', 'categories', 'recomends'));
     }
 
     public function category(Category $category)
     {
         $articles   = $category->articles()->orderBy('published', 'desc')->whereNotNull('published')->paginate(9);
-        $categories = Category::whereHas('articles')->get();
-        $recomends  = RecomendService::getRecommended(request()->ip());
-        return view('welcome', compact('articles', 'categories', 'recomends'));
+        $categories = Category::inRandomOrder()->whereHas('articles')->whereNotNull('category_id',)->limit(11)->get();
+
+        $recomends = RecomendService::getRecommended(request()->ip());
+        return view('new.welcome', compact('articles', 'categories', 'recomends'));
     }
 
     public function search(SearchRequest $request)

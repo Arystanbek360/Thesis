@@ -25,8 +25,8 @@
                     <div class="carousel-item {{$key == 0 ? 'active' : ''}}">
                         <a href="{{ route('show', $recomend->id) }}">
                             <img
-                                    src="{{$recomend->images[0]->image ?? 'https://i.pcmag.com/imagery/reviews/03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png'}}"
-                                    class="d-block w-100" alt="...">
+                                src="{{$recomend->images[0]->image ?? 'https://i.pcmag.com/imagery/reviews/03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png'}}"
+                                class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block bg-dark rounded-2">
                                 <h6 class="fs-4">{{$recomend->title}}</h6>
                             </div>
